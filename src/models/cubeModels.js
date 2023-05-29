@@ -1,5 +1,5 @@
 const Cube = require('../models/Cube');
-let cubes = [];
+const Accessory = require('../models/Accessory');
 
 exports.getAll = async (search, from, to) => {
     let result = await Cube.find();
@@ -25,4 +25,11 @@ exports.create = async (cubeData) => {
     await newCube.save();
 
     return newCube;
+};
+
+exports.attachAccessory = async (req,res) => {
+    const cube = await Cube.findById(req.params.cubeId);
+    const accessories = await Accessory.find();
+
+    res.render('cube/attach', { cube, accessories });
 };
