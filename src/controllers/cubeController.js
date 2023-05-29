@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const e = require("express");
 const Cube = require("../models/Cube");
 const cubeModels = require("../models/cubeModels");
 
@@ -7,9 +8,15 @@ router.get("/create", (req, res) => {
   res.render("create");
 });
 
-router.post("/create", (req, res) => {
+router.post("/create", async (req, res) => {
   const { name, description, imageUrl, difficultyLevel, } = req.body;
-  cubeModels.create({ name, description, imageUrl, difficultyLevel: Number(difficultyLevel), });
+
+  try {
+    await cubeModels.create({ name, description, imageUrl, difficultyLevel: Number(difficultyLevel), });
+  } catch (err){
+    console.log(err.message);
+    return res.redirect("/404");
+  }
   res.redirect("/");
 });
 

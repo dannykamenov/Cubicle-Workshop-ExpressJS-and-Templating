@@ -21,9 +21,7 @@ exports.getAll = async (search, from, to) => {
 
 exports.create = async (cubeData) => {
     const newCube = new Cube(cubeData);
-
     await newCube.save();
-
     return newCube;
 };
 
