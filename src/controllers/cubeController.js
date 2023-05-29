@@ -24,5 +24,6 @@ router.get('/:cubeId/details', async (req, res) => {
 });
 
 router.get('/:cubeId/attach', cubeModels.attachAccessory);
+router.post('/:cubeId/attach', cubeModels.postAttachAccessory);
 
 module.exports = router;
