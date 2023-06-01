@@ -18,4 +18,6 @@ module.exports = (app) => {
 
     //TODO: Setup the static files
     app.use(express.static(path.resolve(__dirname, '../static')));
+
+    app.use(cookieParser());
 };
