@@ -29,6 +29,10 @@ exports.create = async (cubeData) => {
 exports.attachAccessory = async (req,res) => {
     const cube = await Cube.findById(req.params.cubeId);
     const accessories = await Accessory.find({_id: {$nin: cube.accessories}});
+    const isCreator = cube.owner == req.user._id;
+    if(!isCreator){
+        return res.redirect('/404');
+    }
 
     res.render('cube/attach', { cube, accessories });
 };
@@ -53,6 +57,10 @@ exports.getEditCube = async (req, res) => {
         {level: 5, label: 'Expert',selected: 5 === cube.difficultyLevel},
         {level: 6, label: 'Hardcore',selected: 6 === cube.difficultyLevel},
     ]
+    const isCreator = cube.owner == req.user._id;
+    if(!isCreator){
+        return res.redirect('/404');
+    }
     res.render('cube/edit', {cube, difficultyLevels});
 };
 
@@ -66,6 +74,10 @@ exports.getDeleteCube = async (req, res) => {
         {level: 5, label: 'Expert',selected: 5 === cube.difficultyLevel},
         {level: 6, label: 'Hardcore',selected: 6 === cube.difficultyLevel},
     ]
+    const isCreator = cube.owner == req.user._id;
+    if(!isCreator){
+        return res.redirect('/404');
+    }
     res.render('cube/delete', {cube, difficultyLevels});
 };
 

@@ -9,7 +9,7 @@ const { isAuth } = require('../middleware/authMiddleware');
 
 module.exports = (app) => {
     app.use(homeController);
-    app.use('/cubes',isAuth,cubeController);
+    app.use('/cubes',cubeController);
     app.use('/accessory', isAuth ,accessoryController);
     app.use('/',authController);
     app.get('*', (req, res) => {
