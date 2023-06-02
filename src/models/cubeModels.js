@@ -1,5 +1,6 @@
 const Cube = require('../models/Cube');
 const Accessory = require('../models/Accessory');
+const cubeService = require('../services/cubeService');
 
 exports.getAll = async (search, from, to) => {
     let result = await Cube.find();
@@ -40,4 +41,30 @@ exports.postAttachAccessory = async (req, res) => {
     await cube.save();
 
     res.redirect(`/cubes/${req.params.cubeId}/details`);
-}    
+}  
+
+exports.getEditCube = async (req, res) => {
+    const cube = await cubeService.getOne(req.params.cubeId);
+    const difficultyLevels = [
+        {level: 1, label: 'Very Easy',selected: 1 === cube.difficultyLevel},
+        {level: 2, label: 'Easy',selected: 2 === cube.difficultyLevel},
+        {level: 3, label: 'Medium (Standard 3x3)',selected: 3 === cube.difficultyLevel},
+        {level: 4, label: 'Intermediate',selected: 4 === cube.difficultyLevel},
+        {level: 5, label: 'Expert',selected: 5 === cube.difficultyLevel},
+        {level: 6, label: 'Hardcore',selected: 6 === cube.difficultyLevel},
+    ]
+    res.render('cube/edit', {cube, difficultyLevels});
+};
+
+exports.getDeleteCube = async (req, res) => {
+    const cube = await cubeService.getOne(req.params.cubeId);
+    const difficultyLevels = [
+        {level: 1, label: 'Very Easy',selected: 1 === cube.difficultyLevel},
+        {level: 2, label: 'Easy',selected: 2 === cube.difficultyLevel},
+        {level: 3, label: 'Medium (Standard 3x3)',selected: 3 === cube.difficultyLevel},
+        {level: 4, label: 'Intermediate',selected: 4 === cube.difficultyLevel},
+        {level: 5, label: 'Expert',selected: 5 === cube.difficultyLevel},
+        {level: 6, label: 'Hardcore',selected: 6 === cube.difficultyLevel},
+    ]
+    res.render('cube/delete', {cube, difficultyLevels});
+};

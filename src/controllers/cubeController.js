@@ -35,4 +35,7 @@ router.get('/:cubeId/details', async (req, res) => {
 router.get('/:cubeId/attach', cubeModels.attachAccessory);
 router.post('/:cubeId/attach', cubeModels.postAttachAccessory);
 
+router.get('/:cubeId/edit', cubeModels.getEditCube);
+router.get('/:cubeId/delete', cubeModels.getDeleteCube);
+
 module.exports = router;
