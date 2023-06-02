@@ -12,7 +12,7 @@ router.post("/create", async (req, res) => {
   const { name, description, imageUrl, difficultyLevel, } = req.body;
 
   try {
-    await cubeModels.create({ name, description, imageUrl, difficultyLevel: Number(difficultyLevel), });
+    await cubeModels.create({ name, description, imageUrl, difficultyLevel: Number(difficultyLevel), owner: req.user._id});
   } catch (err){
     console.log(err.message);
     return res.redirect("/404");
@@ -27,7 +27,9 @@ router.get('/:cubeId/details', async (req, res) => {
         return res.redirect('/404');
     }
     
-    res.render('details', { cube });
+    const isCreator = cube.owner == req.user._id;
+    console.log(isCreator)
+    res.render('details', {cube, isCreator});
 });
 
 router.get('/:cubeId/attach', cubeModels.attachAccessory);

@@ -12,7 +12,7 @@ exports.login =  async (username, password) => {
     const isValid = await user.validatePassword(password);
     if (!user || !isValid) { throw 'Invalid username or password!'; }
 
-    const payload = { username: user.username};
+    const payload = { _id: user._id, username: user.username};
     const token = await jwtCallback.sign(payload, config.production.SECRET, { expiresIn: '3h' });
 
     return token;
