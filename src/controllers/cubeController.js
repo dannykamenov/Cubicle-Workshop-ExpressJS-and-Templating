@@ -1,14 +1,16 @@
 const router = require("express").Router();
-const e = require("express");
 const Cube = require("../models/Cube");
 const cubeModels = require("../models/cubeModels");
 
 // Path = /cubes/create
 router.get("/create", (req, res) => {
+  console.log(req.user);
   res.render("create");
 });
 
 router.post("/create", async (req, res) => {
+
+  console.log(req.user);
   const { name, description, imageUrl, difficultyLevel, } = req.body;
 
   try {
