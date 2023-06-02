@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const jwtCallback = require('../utils/jwt');
+const config = require('../config/config');
 
 exports.getUserByUsername = (username) => User.findOne({ username });
 
@@ -10,6 +12,9 @@ exports.login =  async (username, password) => {
     const isValid = await user.validatePassword(password);
     if (!user || !isValid) { throw 'Invalid username or password!'; }
 
-    return user;
+    const payload = { username: user.username};
+    const token = await jwtCallback.sign(payload, config.production.SECRET, { expiresIn: '3h' });
+
+    return token;
 
 };
