@@ -38,6 +38,6 @@ router.post('/:cubeId/attach', cubeModels.postAttachAccessory);
 router.get('/:cubeId/edit', cubeModels.getEditCube);
 router.get('/:cubeId/delete', cubeModels.getDeleteCube);
 router.post('/:cubeId/edit', cubeModels.postEditCube);
-//router.post('/:cubeId/delete', cubeModels.postDeleteCube);
+router.post('/:cubeId/delete', cubeModels.postDeleteCube);
 
 module.exports = router;
