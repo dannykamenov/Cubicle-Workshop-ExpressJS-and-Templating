@@ -12,6 +12,8 @@ exports.auth = async (req, res, next) => {
 
             req.user = decodedToken;
             req.isAuth = true;
+            res.locals.user = decodedToken.username;
+            res.locals.isAuth = true;
         } catch (error) {
             res.clearCookie('auth');
             res.redirect('/404');
