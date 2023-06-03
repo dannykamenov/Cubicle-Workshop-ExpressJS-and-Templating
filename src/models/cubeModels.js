@@ -59,7 +59,7 @@ exports.getEditCube = async (req, res) => {
     ]
     const isCreator = cube.owner == req.user._id;
     if(!isCreator){
-        return res.redirect('/404');
+        throw new Error('You are not the creator of this cube!');
     }
     res.render('cube/edit', {cube, difficultyLevels});
 };

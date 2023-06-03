@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Cube = require("../models/Cube");
 const cubeModels = require("../models/cubeModels");
+const { handleRequest } = require('../utils/request');
 
 // Path = /cubes/create
 router.get("/create", (req, res) => {
@@ -35,12 +36,12 @@ router.get('/:cubeId/details', async (req, res) => {
     res.render('details', {cube, isCreator});
 });
 
-router.get('/:cubeId/attach', cubeModels.attachAccessory);
-router.post('/:cubeId/attach', cubeModels.postAttachAccessory);
+router.get('/:cubeId/attach',handleRequest(cubeModels.attachAccessory));
+router.post('/:cubeId/attach',handleRequest(cubeModels.postAttachAccessory));
 
-router.get('/:cubeId/edit', cubeModels.getEditCube);
-router.get('/:cubeId/delete', cubeModels.getDeleteCube);
-router.post('/:cubeId/edit', cubeModels.postEditCube);
-router.post('/:cubeId/delete', cubeModels.postDeleteCube);
+router.get('/:cubeId/edit',handleRequest(cubeModels.getEditCube));
+router.get('/:cubeId/delete',handleRequest(cubeModels.getDeleteCube));
+router.post('/:cubeId/edit',handleRequest(cubeModels.postEditCube));
+router.post('/:cubeId/delete',handleRequest(cubeModels.postDeleteCube));
 
 module.exports = router;
