@@ -5,14 +5,14 @@ router.get('/login', (req, res) => {
     res.render('auth/login');
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next ) => {
     const { username, password } = req.body;
     
     try {
         const token = await authService.login(username, password);
         res.cookie('auth', token, { httpOnly: true })
     } catch (error) {
-        return res.render('auth/login', { error: error.message });
+        return next(new Error('Invalid username or password!'));
     }
 
     res.redirect('/');
@@ -35,7 +35,12 @@ router.post('/register', async (req, res, next) => {
         return next(new Error('User already exists!'));
     }
 
-    const user = await authService.register(username, password);
+    try {
+        const user = await authService.register(username, password);
+    } catch (error) {
+        const errors = Object.keys(error.errors).map(x => error.errors[x].message);
+        return res.render('auth/register', { error: errors[0] });
+    }
     res.redirect('/login');
 });
 
